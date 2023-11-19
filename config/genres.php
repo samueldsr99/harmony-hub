@@ -1,7 +1,6 @@
 <?php
 
 return [
-    // list containing: 'rock', 'pop', 'jazz', 'metal', 'electronic', 'classical', 'hip-hop', 'rap', 'country', 'reggae', 'blues', 'funk', 'soul', 'disco', 'dance', 'indie', 'alternative', 'folk', 'punk', 'r&b', 'latin', 'new-age', 'world', 'opera', 'comedy', 'crossover', 'gospel', 'easy-listening', 'instrumental', 'k-pop', 'j-pop', 'african', 'asian', 'arabic', 'brazilian', 'caribbean', 'celtic', 'hawaiian', 'island', 'middle-eastern', 'north-american', 'south-american', 'european', 'australian', 'caucasian', 'native-american', 'russian', 'turkish', 'indian', 'other'
     'genres' => [
         'rock',
         'pop',
