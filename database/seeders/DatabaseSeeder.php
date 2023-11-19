@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Playlist;
+use App\Models\Reaction;
 use App\Models\Song;
 use Illuminate\Database\Seeder;
 
@@ -28,10 +29,13 @@ final class DatabaseSeeder extends Seeder
             ->count(20)
             ->create();
 
-        // Reactions
+        // Reaction types
         \App\Models\ReactionType::factory()->createMany([
             ['name' => 'like'],
             ['name' => 'dislike'],
         ]);
+
+        // Reactions
+        Reaction::factory()->count(120)->create();
     }
 }
