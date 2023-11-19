@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Song extends Model
+final class Song extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['title', 'artist', 'album', 'duration', 'genre'];
 
+    // Model Relationships -----------------------------------------------------
     public function playlists()
     {
         return $this->belongsToMany(Playlist::class)->withTimestamps();
