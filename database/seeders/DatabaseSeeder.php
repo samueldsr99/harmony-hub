@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,5 +27,11 @@ final class DatabaseSeeder extends Seeder
             ->has(Song::factory(10))
             ->count(20)
             ->create();
+
+        // Reactions
+        \App\Models\ReactionType::factory()->createMany([
+            ['name' => 'like'],
+            ['name' => 'dislike'],
+        ]);
     }
 }
