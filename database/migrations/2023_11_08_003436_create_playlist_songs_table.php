@@ -1,24 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('playlist_songs', function (Blueprint $table) {
+        Schema::create('playlist_songs', function (Blueprint $table): void {
             $table->id();
-            $table->unsignedBigInteger('playlist_id');
-            $table->unsignedBigInteger('song_id');
             $table->timestamps();
 
-            $table->foreign('playlist_id')->references('id')->on('playlists')->onDelete('cascade');
-            $table->foreign('song_id')->references('id')->on('songs')->onDelete('cascade');
+            $table->foreignId('playlist_id')->references('id')->on('playlists')->onDelete('cascade');
+            $table->foreignId('song_id')->references('id')->on('songs')->onDelete('cascade');
         });
     }
 

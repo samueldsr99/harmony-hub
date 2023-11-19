@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('playlists', function (Blueprint $table) {
+        Schema::create('reaction_types', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('name');
             $table->timestamps();
-
-            $table->foreignId('author_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('playlists');
+        Schema::dropIfExists('reaction_types');
     }
 };
