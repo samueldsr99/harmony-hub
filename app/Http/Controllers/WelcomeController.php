@@ -10,11 +10,15 @@ class WelcomeController extends Controller
     //
     public function welcome(): View
     {
-        $trending_playlists = Playlist::with('author')
-            ->orderBy('created_at', 'desc')
-            ->take(6)
+        $trending_playlists = Playlist::with(['author', 'reactions' => function ($query) {
+            $query->where('reaction_type_id', 1);
+        }])
+            ->withCount(['reactions as reaction_count' => function ($query) {
+                $query->where('reaction_type_id', 1);
+            }])
+            ->orderByDesc('reaction_count')
+            ->take(5)
             ->get();
-        error_log($trending_playlists);
 
         return view('welcome', compact('trending_playlists'));
     }
