@@ -26,7 +26,7 @@ final class DatabaseSeeder extends Seeder
         // Playlists and songs
         Playlist::factory()
             ->has(Song::factory(10))
-            ->count(20)
+            ->count(8)
             ->create();
 
         // Reaction types
