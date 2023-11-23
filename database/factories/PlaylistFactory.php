@@ -19,6 +19,7 @@ final class PlaylistFactory extends Factory
     {
         return [
             'title' => fake()->sentence(5),
+            'slug' => fake()->slug(5),
             'author_id' => function() {
                 return User::all()->random(1)->first()->id;
             },
