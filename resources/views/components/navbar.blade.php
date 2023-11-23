@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
-                <a href="{{ route('welcome') }}">
+                <a href="{{ route('dashboard') }}">
                     <x-application-logo />
                 </a>
 
@@ -77,7 +77,7 @@
                                     <hr class="mt-2">
                                 @endif
 
-{{--                                <a href="{{route('profile.edit')}}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Your profile</a>--}}
+                                <a href="{{ route('playlists.create') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Create playlist</a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
 
                                 <form method="POST" action="{{ route('signout') }}">

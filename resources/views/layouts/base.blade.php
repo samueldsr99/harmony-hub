@@ -16,7 +16,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<div class="min-h-screen bg-gray-100">
     <x-navbar/>
 
     <div class="container max-w-7xl mx-auto pb-20">

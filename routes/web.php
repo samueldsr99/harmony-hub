@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Public routes
 Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
-Route::get('playlists', [\App\Http\Controllers\PlaylistController::class, 'index'])->name('playlists.index');
-Route::get('playlists/{playlist:slug}', [\App\Http\Controllers\PlaylistController::class, 'show'])->name('playlists.show');
+Route::get('playlists', [PlaylistController::class, 'index'])->name('playlists.index');
+Route::get('playlists/record/{playlist:slug}', [PlaylistController::class, 'show'])->name('playlists.show');
 
+
+
+// Authenticated routes
 Route::view('/dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/playlists/new', [PlaylistController::class, 'create'])->name('playlists.create');
+
+    Route::post('/playlists', [PlaylistController::class, 'store'])->name('playlists.store');
+});
 
 require __DIR__.'/auth.php';

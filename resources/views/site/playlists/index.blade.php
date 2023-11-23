@@ -6,7 +6,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($playlists as $playlist)
             <div class="px-4 py-2 rounded-2xl">
-                <div class="flex items-center gap-1">
+                <img src="{{$playlist->getImageUrl('preview')}}" class="object-cover rounded-2xl" alt="{{$playlist->title}}" width="128" height="128">
+                <div class="flex gap-1">
                     <a class="hover:underline" href="{{ route('playlists.show', ['playlist' => $playlist]) }}">
                         <h2 class="font-bold text-2xl line-clamp-1">{{$playlist->title}}</h2>
                     </a>
