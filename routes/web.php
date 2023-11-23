@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -23,12 +24,17 @@ Route::get('playlists/record/{playlist:slug}', [PlaylistController::class, 'show
 
 
 // Authenticated routes
-Route::view('/dashboard', 'dashboard')->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function() {
     Route::get('/playlists/new', [PlaylistController::class, 'create'])->name('playlists.create');
+    Route::get('/playlists/mine', [PlaylistController::class, 'mine'])->name('playlists.mine');
 
     Route::post('/playlists', [PlaylistController::class, 'store'])->name('playlists.store');
+    Route::delete("/playlists/{playlist}", [PlaylistController::class, 'destroy'])->name('playlists.destroy');
+
+    Route::patch('/playlists/{playlist}/like', [PlaylistController::class, 'like'])->name('playlists.like');
+    Route::patch('/playlists/{playlist}/dislike', [PlaylistController::class, 'dislike'])->name('playlists.dislike');
 });
 
 require __DIR__.'/auth.php';
