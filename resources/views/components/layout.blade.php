@@ -21,9 +21,8 @@
 </head>
 
 <body class="bg-white">
-    <x-navbar />
-
     {{$slot}}
+    <x-footer></x-footer>
 </body>
 
 </html>
