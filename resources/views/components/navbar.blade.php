@@ -2,10 +2,6 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
-                <div class="flex-shrink-0">
-                    <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
-                </div>
-
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
 
@@ -32,12 +28,12 @@
                     <!-- Profile dropdown -->
                     @guest
                         <div class="text-white">
-                            <a href="{{route('register')}}" class="text-white uppercase py-.5 px-2">Register</a>
+                            <a href="{{route('signup')}}" class="text-white uppercase py-.5 px-2">Register</a>
                         </div>
 
 
                         <div class="text-white">
-                            <a href="{{route('login')}}" class="text-white border border-white uppercase py-.5 px-2">LOGIN</a>
+                            <a href="{{route('signin')}}" class="text-white border border-white uppercase py-.5 px-2">LOGIN</a>
                         </div>
 
                     @endguest
@@ -88,10 +84,10 @@
                                     <hr class="mt-2">
                                 @endif
 
-                                <a href="{{route('profile.edit')}}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Your profile</a>
+{{--                                <a href="{{route('profile.edit')}}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Your profile</a>--}}
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
 
-                                <form method="POST" action="{{route('logout')}}">
+                                <form method="POST" action="{{route('signout')}}">
                                     @csrf
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2" onclick="event.preventDefault();
                                                 this.closest('form').submit();">Sign out</a>
