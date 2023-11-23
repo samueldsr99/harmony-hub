@@ -16,4 +16,33 @@
         </div>
     @endforeach
     </div>
+
+
+    <div class="mt-12">
+        @auth
+            @if(auth()->id() === $playlist->author_id)
+                <form action="{{ route('playlists.destroy', $playlist) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <x-button-error>Delete</x-button-error>
+                </form>
+            @else
+                <div class="flex gap-3">
+                    <form action="{{ route('playlists.like', $playlist) }}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 1 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}">
+                            +
+                        </button>
+                    </form>
+                    <form action="{{ route('playlists.dislike', $playlist) }}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 2 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}">-</button>
+                    </form>
+                </div>
+
+            @endif
+        @endauth
+        </div>
 </x-base-layout>
