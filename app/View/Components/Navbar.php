@@ -20,11 +20,15 @@ class Navbar extends Component
     public function __construct()
     {
         //
-        $this->menu_items = [];
+        $this->menu_items = [
+            ['label' => 'Playlists', 'route' => 'playlists.index', 'url' => null],
+        ];
 
-        $this->home_menu_items = [];
+        $this->home_menu_items = [
+        ];
 
-        $this->admin_menu_items = [];
+        $this->admin_menu_items = [
+        ];
     }
 
     /**
