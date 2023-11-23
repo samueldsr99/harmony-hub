@@ -21,7 +21,8 @@ class Navbar extends Component
     {
         //
         $this->menu_items = [
-            ['label' => 'Playlists', 'route' => 'playlists.index', 'url' => null],
+            ['label' => 'Explore', 'route' => 'playlists.index', 'url' => null],
+            ['label' => 'My playlists', 'route' => 'playlists.mine', 'url' => null],
         ];
 
         $this->home_menu_items = [
