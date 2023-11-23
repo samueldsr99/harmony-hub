@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\WelcomeNewUser;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -39,10 +40,7 @@ class SignUpController extends Controller
 
         event(new Registered($user));
 
-//        $user->notify(new WelcomeNewUser());
-
-        $admin = User::where('is_admin', true)->first();
-//        $admin?->notify(new InformAdminOfNewUser($user));
+        $user->notify(new WelcomeNewUser());
 
         Auth::login($user);
 
