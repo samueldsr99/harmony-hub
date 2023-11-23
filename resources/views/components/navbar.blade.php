@@ -54,7 +54,7 @@
                             <div x-show="admin_menu_visible" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
 
                                 @auth
-                                    <span class="block px-4 py-2 text-xs uppercase text-gray-400 font-semibold">My data</span>
+                                    <span class="block px-4 py-2 text-xs text-gray-400 font-semibold">My data</span>
                                     @foreach($home_menu_items as $item)
                                         @if(request()->routeIs($item['route']))
                                             <a href="{!! $item['url'] ?? route($item['route']) !!}" class="block px-4 pt-2 text-sm bg-gray-100 text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">{{$item['label']}}</a>
@@ -78,7 +78,7 @@
                                 @endif
 
                                 <a href="{{ route('playlists.create') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Create playlist</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Profile</a>
 
                                 <form method="POST" action="{{ route('signout') }}">
                                     @csrf
