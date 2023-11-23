@@ -19,8 +19,6 @@ final class SongFactory extends Factory
         return [
             'title' => fake()->sentence(5),
             'artist' => fake()->name(),
-            'album' => fake()->sentence(),
-            'duration' => fake()->randomFloat(2, 1, 5),
             'genre' => fake()->randomElement(config('genres.genres')),
         ];
     }
