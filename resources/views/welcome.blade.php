@@ -12,10 +12,7 @@
                 </div>
                 <div class="space-x-4">
                     <a href="/signin">
-                        <button
-                            class="bg-zinc-900 text-white px-5 py-2 rounded-md hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900">
-                            Get Started
-                        </button>
+                        <x-button-primary>Get Started</x-button-primary>
                     </a>
                 </div>
             </div>
@@ -27,7 +24,7 @@
         <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($trending_playlists as $playlist)
                     <div class="px-4 py-2 rounded-2xl">
-                        <a href="#">
+                        <a href="{{ route('playlists.show', ['playlist' => $playlist]) }}">
                         <h2 class="font-bold text-2xl line-clamp-1">{{$playlist->title}}</h2>
                         <p class="text-sm text-gray-600">{{$playlist->author?->name ?? "Unknown author"}}</p>
                         <ul class="mt-4 space-y-1">
