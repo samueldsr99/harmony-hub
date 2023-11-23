@@ -11,7 +11,7 @@ final class Song extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'artist', 'album', 'duration', 'genre'];
+    protected $fillable = ['title', 'artist', 'genre'];
 
     // Model Relationships -----------------------------------------------------
     public function playlists()

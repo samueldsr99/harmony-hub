@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Playlist;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,5 +25,15 @@ final class PlaylistFactory extends Factory
                 return User::all()->random(1)->first()->id;
             },
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Playlist $playlist) {
+            $url = 'https://source.unsplash.com/random/1200x800';
+            $playlist
+                ->addMediaFromUrl($url)
+                ->toMediaCollection();
+        });
     }
 }
