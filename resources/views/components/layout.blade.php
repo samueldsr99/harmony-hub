@@ -21,7 +21,9 @@
 </head>
 
 <body class="bg-white">
-    {{$slot}}
+    <div class="pb-12">
+        {{$slot}}
+    </div>
     <x-footer></x-footer>
 </body>
 
