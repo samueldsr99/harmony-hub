@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Playlist;
-use App\Models\Song;
+use App\Models\Reaction;
+use App\Models\ReactionType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PlaylistController extends Controller
 {
@@ -19,6 +20,19 @@ class PlaylistController extends Controller
 
         return view('site.playlists.index', [
             'playlists' => $playlists,
+        ]);
+    }
+
+    public function mine(): View
+    {
+        error_log(auth()->id());
+        $playlists_mine = Playlist::query()
+            ->where(['author_id' => auth()->id()])
+            ->with(['songs', 'author', 'media'])
+            ->orderBy('created_at', 'desc')->get();
+
+        return view('site.playlists.mine', [
+            'playlists' => $playlists_mine,
         ]);
     }
 
@@ -56,15 +70,76 @@ class PlaylistController extends Controller
 
         if($request->hasFile('image')) {
             $playlist->addMediaFromRequest('image')->toMediaCollection();
+        } else {
+            $defaultImageUrl = 'https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg';
+            $playlist->addMediaFromUrl($defaultImageUrl)->toMediaCollection();
         }
 
-        return redirect()->route('playlists.index');
+        return redirect()->route('playlists.mine');
     }
 
     public function show(Playlist $playlist): View
     {
+        $reaction = Reaction::where('playlist_id', $playlist->id)->where('user_id', auth()->id())->first();
+
         return view('site.playlists.show', [
             'playlist' => $playlist,
+            'reaction_type_id' => $reaction?->reaction_type_id
         ]);
+    }
+
+    public function destroy(Playlist $playlist): RedirectResponse
+    {
+        $this->checkIfUserHasAccess($playlist);
+
+        $playlist->delete();
+
+        return redirect()->route('playlists.mine');
+    }
+
+    public function like(Playlist $playlist): RedirectResponse
+    {
+        $this->checkIfUserHasAccess($playlist);
+
+        $previous_reaction = Reaction::where('user_id', auth()->id())->where('playlist_id', $playlist->id)->first();
+
+        if ($previous_reaction) {
+            $previous_reaction->delete();
+        }
+
+        Reaction::firstOrCreate([
+            'user_id' => auth()->id(),
+            'playlist_id' => $playlist->id,
+            'reaction_type_id' => 1,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function dislike(Playlist $playlist): RedirectResponse
+    {
+        $this->checkIfUserHasAccess($playlist);
+
+        $previous_reaction = Reaction::where('user_id', auth()->id())->where('playlist_id', $playlist->id)->first();
+
+        if ($previous_reaction) {
+            $previous_reaction->delete();
+        }
+
+        Reaction::firstOrCreate([
+            'user_id' => auth()->id(),
+            'playlist_id' => $playlist->id,
+            'reaction_type_id' => 2,
+        ]);
+
+        return redirect()->back();
+    }
+
+    private function checkIfUserHasAccess(Playlist $playlist)
+    {
+        if( auth()->id() !== $playlist->author_id) {
+            session()->flash('error_notification', "You're not authorized to make this action");
+            return redirect()->back();
+        }
     }
 }
