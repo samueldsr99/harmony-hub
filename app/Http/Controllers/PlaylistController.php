@@ -6,6 +6,7 @@ use App\Models\Playlist;
 use App\Models\Reaction;
 use App\Models\ReactionType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -110,6 +111,9 @@ class PlaylistController extends Controller
             ['reaction_type_id' => 1]
         );
 
+        Cache::forget('welcome.trending_playlists');
+        Cache::forget('dashboard.trending_playlists');
+
         return redirect()->back();
     }
 
@@ -121,6 +125,9 @@ class PlaylistController extends Controller
             ['user_id' => auth()->id(), 'playlist_id' => $playlist->id],
             ['reaction_type_id' => 2]
         );
+
+        Cache::forget('welcome.trending_playlists');
+        Cache::forget('dashboard.trending_playlists');
 
         return redirect()->back();
     }
