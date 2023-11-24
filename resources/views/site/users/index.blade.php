@@ -3,7 +3,7 @@
         <h1 class="text-4xl font-semibold">Users</h1>
     </x-slot>
 
-    <ul class="space-y-6 max-w-lg px-8">
+    <ul class="space-y-6 max-w-lg">
         @foreach($users as $user)
             <li class="flex items-center justify-between">
                 <div class="">

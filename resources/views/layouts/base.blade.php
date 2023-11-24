@@ -19,11 +19,11 @@
 <div class="min-h-screen bg-gray-100">
     <x-navbar/>
 
-    <div class="container max-w-7xl mx-auto pb-20">
+    <div class="container max-w-7xl mx-auto pb-20 px-6">
         <!-- Page Heading -->
         @if (isset($header))
             <header>
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-6">
                     {{ $header }}
                 </div>
             </header>
