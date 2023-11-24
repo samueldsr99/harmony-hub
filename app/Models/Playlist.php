@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
@@ -27,6 +28,11 @@ final class Playlist extends Model implements HasMedia
     {
         static::creating(function ($playlist) {
             $playlist->slug = $playlist->slug ?? $playlist->createUniqueSlug();
+        });
+
+        static::updated(function($playlist) {
+            Cache::forget('welcome.trending_playlists');
+            Cache::forget('dashboard.trending_playlists');
         });
     }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Reaction extends Model
 {
@@ -29,5 +30,16 @@ class Reaction extends Model
     public function reactionType()
     {
         return $this->belongsTo(ReactionType::class);
+    }
+
+
+    // Model events -----------------------------------------------------------
+    protected static function booted()
+    {
+
+        static::updated(function() {
+            Cache::forget('welcome.trending_playlists');
+            Cache::forget('dashboard.trending_playlists');
+        });
     }
 }
