@@ -9,6 +9,13 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    public function index(): View
+    {
+        $users = User::withCount('playlists')->get();
+
+        return view('site.users.index', compact('users'));
+    }
+
     public function show(User $user): View
     {
         $playlists = Playlist::with(['author', 'songs'])

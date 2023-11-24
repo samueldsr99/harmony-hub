@@ -23,6 +23,7 @@ Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::get('playlists', [PlaylistController::class, 'index'])->name('playlists.index');
 Route::get('playlists/record/{playlist:slug}', [PlaylistController::class, 'show'])->name('playlists.show');
 
+Route::get('users', [UserController::class, 'index'])->name('users.index');
 Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
 
 
