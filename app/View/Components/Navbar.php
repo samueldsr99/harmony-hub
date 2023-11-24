@@ -30,6 +30,7 @@ class Navbar extends Component
         ];
 
         $this->admin_menu_items = [
+            ['label' => 'Playlists', 'route' => 'admin.playlists.index', 'url' => null],
         ];
     }
 

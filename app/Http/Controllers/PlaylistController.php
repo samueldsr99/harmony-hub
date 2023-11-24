@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Playlist;
 use App\Models\Reaction;
-use App\Models\ReactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
@@ -40,6 +39,7 @@ class PlaylistController extends Controller
     public function create(): View
     {
         $genres = config('genres.genres');
+
         return view('site.playlists.create', compact('genres'));
     }
 
@@ -63,13 +63,13 @@ class PlaylistController extends Controller
             return [
                 'title' => $song['title'],
                 'artist' => $song['author'],
-                'genre' => $song['genre']
+                'genre' => $song['genre'],
             ];
         });
 
         $playlist->songs()->createMany($songsData->toArray());
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $playlist->addMediaFromRequest('image')->toMediaCollection();
         } else {
             $defaultImageUrl = 'https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg';
@@ -134,8 +134,9 @@ class PlaylistController extends Controller
 
     private function checkIfUserHasAccess(Playlist $playlist)
     {
-        if( auth()->id() !== $playlist->author_id) {
+        if (! auth()->user()->is_admin && auth()->id() !== $playlist->author_id) {
             session()->flash('error_notification', "You're not authorized to make this action");
+
             return redirect()->back();
         }
     }

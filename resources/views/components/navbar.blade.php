@@ -36,7 +36,7 @@
                         <div class="relative ml-3 " x-data="{ admin_menu_visible: false }">
                             <div>
                                 <button @click="admin_menu_visible = !admin_menu_visible" type="button" class="flex items-center font-semibold" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                    <span>Admin</span>
+                                    <span>{{auth()->user()->name}}</span>
                                     <svg aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-3 h-3 w-3 stroke-[#ff3850]"><path d="M9.75 4.125 6 7.875l-3.75-3.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                                 </button>
                             </div>
@@ -69,7 +69,7 @@
                                     <span class="block px-4 py-2 text-xs uppercase text-[#ff3850] font-semibold">Manage data</span>
                                     @foreach($admin_menu_items as $item)
                                         @if(request()->routeIs($item['route']))
-                                            <a href="{!! $item['url'] ?? route($item['route']) !!}" class="block px-4 pt-2 text-sm bg-[#ff3850] text-[#ff3850]" role="menuitem" tabindex="-1" id="user-menu-item-0">{{$item['label']}}</a>
+                                            <a href="{!! $item['url'] ?? route($item['route']) !!}" class="block px-4 pt-2 text-sm text-[#ff3850]" role="menuitem" tabindex="-1" id="user-menu-item-0">{{$item['label']}}</a>
                                         @else
                                             <a href="{!! $item['url'] ?? route($item['route']) !!}" class="block px-4 py-2 text-sm text-[#ff3850]" role="menuitem" tabindex="-1" id="user-menu-item-0">{{$item['label']}}</a>
                                         @endif

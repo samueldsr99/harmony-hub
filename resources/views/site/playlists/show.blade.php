@@ -52,7 +52,7 @@
 
     <div class="mt-12">
         @auth
-            @if(auth()->id() === $playlist->author_id)
+            @if(auth()->user()->is_admin || auth()->id() === $playlist->author_id)
                 <form action="{{ route('playlists.destroy', $playlist) }}" method="post">
                     @csrf
                     @method('DELETE')

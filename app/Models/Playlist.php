@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
@@ -20,17 +21,18 @@ final class Playlist extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+    use SoftDeletes;
 
     protected $fillable = ['title', 'author_id'];
 
     // Model events -----------------------------------------------------------
     protected static function booted()
     {
-        static::creating(function ($playlist) {
+        self::creating(function ($playlist) {
             $playlist->slug = $playlist->slug ?? $playlist->createUniqueSlug();
         });
 
-        static::updated(function($playlist) {
+        self::updated(function ($playlist) {
             Cache::forget('welcome.trending_playlists');
             Cache::forget('dashboard.trending_playlists');
         });
