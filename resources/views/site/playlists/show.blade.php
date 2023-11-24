@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h1 class="text-4xl font-semibold">{{$playlist->title}}</h1>
         <div class="mt-2 font-semibold">
-            Author: <a class="text-gray-500 underline" href="#">{{$playlist->author->name}}</a>
+            Author: <a href="{{ route('users.show', $playlist->author) }}" class="text-gray-500 underline" href="#">{{$playlist->author->name}}</a>
         </div>
     </x-slot>
 
@@ -11,8 +11,14 @@
     <div class="space-y-6 mt-12">
     @foreach($playlist->songs as $song)
         <div class="py-2 px-4 border-b flex justify-between">
-            <span class="font-semibold text-xl">{{$song->title}}</span>
-            <span>{{$song->artist}}</span>
+            <div>
+                <p class="font-semibold text-xl">{{$song->title}}</p>
+                <a class="py-1 px-2.5 bg-amber-200 text-sm font-semibold rounded-full">{{$song->genre}}</a>
+            </div>
+            <div>
+                <p class="text-sm text-gray-600 text-end">Artist: <span class="font-semibold">{{$song->artist}}</span></p>
+                <p class="text-sm text-gray-600 text-end">{{$song->created_at}}</p>
+            </div>
         </div>
     @endforeach
     </div>

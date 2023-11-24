@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::get('playlists', [PlaylistController::class, 'index'])->name('playlists.index');
 Route::get('playlists/record/{playlist:slug}', [PlaylistController::class, 'show'])->name('playlists.show');
 
+Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
 
 
 // Authenticated routes
