@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +39,11 @@ Route::middleware('auth')->group(function() {
     Route::patch('/playlists/{playlist}/like', [PlaylistController::class, 'like'])->name('playlists.like');
     Route::patch('/playlists/{playlist}/dislike', [PlaylistController::class, 'dislike'])->name('playlists.dislike');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
 
 require __DIR__.'/auth.php';
