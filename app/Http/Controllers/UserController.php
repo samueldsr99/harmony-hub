@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index(): View
     {
-        $users = User::withCount('playlists')->get();
+        $users = User::withCount('playlists')->orderByDesc('playlists_count')->get();
 
         return view('site.users.index', compact('users'));
     }
