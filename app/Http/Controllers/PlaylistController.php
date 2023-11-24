@@ -81,10 +81,14 @@ class PlaylistController extends Controller
     public function show(Playlist $playlist): View
     {
         $reaction = Reaction::where('playlist_id', $playlist->id)->where('user_id', auth()->id())->first();
+        $likes = Reaction::where('playlist_id', $playlist->id)->where('reaction_type_id', 1)->count();
+        $dislikes = Reaction::where('playlist_id', $playlist->id)->where('reaction_type_id', 2)->count();
 
         return view('site.playlists.show', [
             'playlist' => $playlist,
-            'reaction_type_id' => $reaction?->reaction_type_id
+            'reaction_type_id' => $reaction?->reaction_type_id ?? 0,
+            'likes' => $likes,
+            'dislikes' => $dislikes,
         ]);
     }
 
@@ -101,17 +105,10 @@ class PlaylistController extends Controller
     {
         $this->checkIfUserHasAccess($playlist);
 
-        $previous_reaction = Reaction::where('user_id', auth()->id())->where('playlist_id', $playlist->id)->first();
-
-        if ($previous_reaction) {
-            $previous_reaction->delete();
-        }
-
-        Reaction::firstOrCreate([
-            'user_id' => auth()->id(),
-            'playlist_id' => $playlist->id,
-            'reaction_type_id' => 1,
-        ]);
+        Reaction::updateOrCreate(
+            ['user_id' => auth()->id(), 'playlist_id' => $playlist->id],
+            ['reaction_type_id' => 1]
+        );
 
         return redirect()->back();
     }
@@ -120,17 +117,10 @@ class PlaylistController extends Controller
     {
         $this->checkIfUserHasAccess($playlist);
 
-        $previous_reaction = Reaction::where('user_id', auth()->id())->where('playlist_id', $playlist->id)->first();
-
-        if ($previous_reaction) {
-            $previous_reaction->delete();
-        }
-
-        Reaction::firstOrCreate([
-            'user_id' => auth()->id(),
-            'playlist_id' => $playlist->id,
-            'reaction_type_id' => 2,
-        ]);
+        Reaction::updateOrCreate(
+            ['user_id' => auth()->id(), 'playlist_id' => $playlist->id],
+            ['reaction_type_id' => 2]
+        );
 
         return redirect()->back();
     }

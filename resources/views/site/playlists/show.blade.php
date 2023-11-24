@@ -8,6 +8,32 @@
 
     <img src="{{$playlist->getImageUrl('preview')}}" alt="{{$playlist->title}}" class="object-cover rounded-2xl border ring ring-gray-50 hover:ring-[#ff3850] transition-all duration-200" width="480" height="480">
 
+    @auth
+        <div class="flex gap-3 mt-8">
+            @if(auth()->id() !== $playlist->author_id)
+                <form action="{{ route('playlists.like', $playlist) }}" method="post">
+                    @csrf
+                    @method('PATCH')
+                    <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 1 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}">
+                        {{$likes}} ^
+                    </button>
+                </form>
+                <form action="{{ route('playlists.dislike', $playlist) }}" method="post">
+                    @csrf
+                    @method('PATCH')
+                    <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 2 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}">{{$dislikes}} v</button>
+                </form>
+            @else
+                <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 1 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}" disabled>
+                    {{$likes}} ^
+                </button>
+                <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 1 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}" disabled>
+                    {{$dislikes}} v
+                </button>
+            @endif
+        </div>
+    @endauth
+
     <div class="space-y-6 mt-12">
     @foreach($playlist->songs as $song)
         <div class="py-2 px-4 border-b flex justify-between">
@@ -32,22 +58,6 @@
                     @method('DELETE')
                     <x-button-error>Delete</x-button-error>
                 </form>
-            @else
-                <div class="flex gap-3">
-                    <form action="{{ route('playlists.like', $playlist) }}" method="post">
-                        @csrf
-                        @method('PATCH')
-                        <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 1 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}">
-                            +
-                        </button>
-                    </form>
-                    <form action="{{ route('playlists.dislike', $playlist) }}" method="post">
-                        @csrf
-                        @method('PATCH')
-                        <button class="inline-flex items-center justify-center px-4 py-2 rounded-2xl font-bold text-lg {{ $reaction_type_id === 2 ? 'bg-red-500 text-white ring ring-red-500' : 'bg-white text-[#ff3850]' }}">-</button>
-                    </form>
-                </div>
-
             @endif
         @endauth
         </div>
