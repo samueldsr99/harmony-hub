@@ -28,7 +28,7 @@ class WelcomeNewUser extends Notification
             ->greeting('Hi ' . $notifiable->name.',')
             ->line('Welcome to our site and congratulations for registering!')
             ->action('Here you can see all the playlists people are publishing', route('playlists.index'))
-            ->salutation('Greetings from<br/><br/>Harmony Hub Team');
+            ->salutation('Greetings from Harmony Hub Team');
     }
 
     /**
