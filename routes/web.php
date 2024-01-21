@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminPlaylistController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Http\Controllers\InspireController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -26,6 +27,9 @@ Route::get('playlists/record/{playlist:slug}', [PlaylistController::class, 'show
 
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
+
+Route::get('inspire', [InspireController::class, 'index'])->name('inspire.index');
+Route::get('inspire/{spotify_playlist_id}', [InspireController::class, 'show'])->name('inspire.show');
 
 // Authenticated routes
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -53,4 +57,4 @@ Route::name('admin.')->middleware(['auth', 'is.admin'])->group(function () {
     Route::patch('/admin/playlists/{playlist}/restore', [AdminPlaylistController::class, 'restore'])->name('playlists.restore');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
