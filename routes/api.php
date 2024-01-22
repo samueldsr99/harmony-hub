@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\PlaylistApiController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+Route::get('/v1/playlist', [PlaylistApiController::class, 'index']);
+Route::get('/v1/playlist/{playlist_id}', [PlaylistApiController::class, 'show']);
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/v1/playlist', [PlaylistApiController::class, 'store']);
+    Route::put('/v1/playlist', [PlaylistApiController::class, 'update']);
+    Route::delete('/v1/playlist/{playlist_id}', [PlaylistApiController::class, 'destroy']);
 });
 
-Route::apiResource('/playlist', PlaylistApiController::class);
