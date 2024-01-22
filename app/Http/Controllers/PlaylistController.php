@@ -36,13 +36,6 @@ class PlaylistController extends Controller
         ]);
     }
 
-    public function create(): View
-    {
-        $genres = config('genres.genres');
-
-        return view('site.playlists.create', compact('genres'));
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -79,6 +72,13 @@ class PlaylistController extends Controller
         return redirect()->route('playlists.mine');
     }
 
+    public function create(): View
+    {
+        $genres = config('genres.genres');
+
+        return view('site.playlists.create', compact('genres'));
+    }
+
     public function show(Playlist $playlist): View
     {
         $reaction = Reaction::where('playlist_id', $playlist->id)->where('user_id', auth()->id())->first();
@@ -100,6 +100,15 @@ class PlaylistController extends Controller
         $playlist->delete();
 
         return redirect()->route('playlists.mine');
+    }
+
+    private function checkIfUserHasAccess(Playlist $playlist)
+    {
+        if (!auth()->user()->is_admin && auth()->id() !== $playlist->author_id) {
+            session()->flash('error_notification', "You're not authorized to make this action");
+
+            return redirect()->back();
+        }
     }
 
     public function like(Playlist $playlist): RedirectResponse
@@ -130,14 +139,5 @@ class PlaylistController extends Controller
         Cache::forget('dashboard.trending_playlists');
 
         return redirect()->back();
-    }
-
-    private function checkIfUserHasAccess(Playlist $playlist)
-    {
-        if (! auth()->user()->is_admin && auth()->id() !== $playlist->author_id) {
-            session()->flash('error_notification', "You're not authorized to make this action");
-
-            return redirect()->back();
-        }
     }
 }

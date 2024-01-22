@@ -7,11 +7,9 @@
 
     <title>Harmony Hub | {{ $title ?? "" }}</title>
 
-    <!-- JS Alpine scripting -->
-    <script src="//unpkg.com/alpinejs" defer></script>
-
     <!-- Styles -->
     <script src="https://cdn.tailwindcss.com"></script>
+    @livewireStyles
 </head>
 
 <body class="bg-white">
@@ -19,6 +17,7 @@
     {{$slot}}
 </div>
 <x-footer></x-footer>
+@livewireScripts
 </body>
 
 </html>
