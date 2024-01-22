@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PlaylistRequest;
+use App\Http\Requests\PlaylistStoreRequest;
 use App\Http\Requests\PlaylistUpdateRequest;
 use App\Http\Resources\PlaylistResource;
 use App\Models\Playlist;
@@ -28,7 +28,7 @@ class PlaylistApiController extends Controller
         }
     }
 
-    public function store(PlaylistRequest $request)
+    public function store(PlaylistStoreRequest $request)
     {
         try {
             $playlist = Playlist::create($request->all());
