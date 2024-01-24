@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Psr\Http\Message\ResponseInterface;
 
 class SpotifyService
 {
@@ -36,7 +37,7 @@ class SpotifyService
             'Authorization' => 'Bearer ' . $this->getToken(),
         ])
             ->withResponseMiddleware(
-                fn($request, $response) => $this->invalidateWhenUnauthorized($request, $response)
+                fn($response) => $this->invalidateWhenUnauthorized($response)
             )
             ->get($this->base_url . '/playlists/' . $spotify_playlist_id);
 
@@ -67,11 +68,17 @@ class SpotifyService
         return $access_token;
     }
 
-    private function invalidateWhenUnauthorized($request, $response): Http
+    private function invalidateWhenUnauthorized(ResponseInterface $response): ResponseInterface
     {
-        if ($response->status() === 401) {
+        if ($response->getStatusCode() === 401) {
             cache()->forget('spotify_access_token');
+
+            $url = $response->getHeader('Location')[0];
+            return Http
+                ::withHeaders(['Authorization' => 'Bearer ' . $this->getToken()])
+                ->get($url)->json();
         }
+
         return $response;
     }
 
@@ -89,7 +96,7 @@ class SpotifyService
         $response = Http
             ::withHeaders(['Authorization' => 'Bearer ' . $this->getToken()])
             ->withResponseMiddleware(
-                fn($request, $response) => $this->invalidateWhenUnauthorized($request, $response)
+                fn($response) => $this->invalidateWhenUnauthorized($response)
             )
             ->get($this->base_url . '/browse/featured-playlists');
 
