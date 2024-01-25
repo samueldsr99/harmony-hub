@@ -16,7 +16,10 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Users
-        \App\Models\User::factory()->create([
+        // Create if email doesn't exist
+        \App\Models\User::firstOrCreate([
+            'email' => 'admin@example.com'
+        ], [
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'password' => bcrypt('admin'),
