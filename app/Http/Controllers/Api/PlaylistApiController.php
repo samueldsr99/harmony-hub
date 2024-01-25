@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlaylistRequest;
 use App\Http\Requests\PlaylistUpdateRequest;
