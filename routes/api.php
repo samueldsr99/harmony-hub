@@ -19,7 +19,7 @@ Route::get('/v1/playlist/{playlist_id}', [PlaylistApiController::class, 'show'])
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/v1/playlist', [PlaylistApiController::class, 'store']);
-    Route::put('/v1/playlist', [PlaylistApiController::class, 'update']);
+    Route::put('/v1/playlist/{playlist_id}', [PlaylistApiController::class, 'update']);
     Route::delete('/v1/playlist/{playlist_id}', [PlaylistApiController::class, 'destroy']);
 });
 

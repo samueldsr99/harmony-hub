@@ -18,6 +18,7 @@ class PlaylistResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'songs' => SongResource::collection($this->whenLoaded('songs')),
+            'author' => $this->author->name,
         ];
     }
 }

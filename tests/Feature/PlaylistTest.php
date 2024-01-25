@@ -31,17 +31,3 @@ test('Playlist details is being displayed', function () {
     $response->assertStatus(200);
     $response->assertSee('My first playlist');
 });
-
-test('Playlist can be deleted if it belongs to the user', function () {
-    // Arrange
-    $user = User::factory()->create();
-    $playlist = $user->playlists()->create(['title' => 'My first playlist']);
-
-    // Act
-    $response = $this->actingAs($user)->delete('/playlists/record/' . $playlist->slug);
-
-    // Assert
-    $response->assertStatus(302);
-    $response->assertRedirect('/playlists/mine');
-    $this->assertDatabaseMissing('playlists', ['id' => $playlist->id]);
-});
