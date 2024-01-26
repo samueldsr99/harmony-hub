@@ -30,13 +30,24 @@ class PlaylistApiController extends Controller
 
     public function store(PlaylistStoreRequest $request)
     {
+
         try {
             $playlist = Playlist::create($request->all());
+            $songsData = collect($request->songs)->map(function ($song) {
+                return [
+                    'title' => $song['title'],
+                    'artist' => $song['author'],
+                    'genre' => $song['genre'],
+                ];
+            });
+            $playlist->songs()->createMany($songsData);
+            $playlist->load('songs');
+
             return new PlaylistResource($playlist);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'message' => 'Playlist not found',
-            ], 404);
+                'message' => 'Server error',
+            ], 500);
         }
     }
 
